@@ -45,6 +45,7 @@ abstract class UserDatabase : RoomDatabase() {
 
         }
 
+
     }
     class UserDatabaseCallback(private val scope: CoroutineScope) : RoomDatabase.Callback() {
 
