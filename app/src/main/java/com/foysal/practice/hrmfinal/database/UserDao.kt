@@ -19,5 +19,10 @@ interface UserDao {
     @Query("SELECT * FROM user_table")
     fun getAllUser() : LiveData<List<UserData>>
 
+    @Query("SELECT EXISTS(SELECT * FROM user_table WHERE userId = :userId and userPassword = :userPassword)")
+    fun validate(userId : String, userPassword : String) : Boolean
+
+    @Query("SELECT * FROM user_table")
+    fun getAllUserList() : List<UserData>
 
 }

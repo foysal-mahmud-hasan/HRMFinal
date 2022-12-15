@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 data class UserData (
 
     @PrimaryKey(autoGenerate = false)
-    var userId : Int ,
+    var userId : String ,
 
     @ColumnInfo(name = "userPassword")
     var userPassword : String,

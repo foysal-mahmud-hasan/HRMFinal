@@ -15,8 +15,6 @@ abstract class UserDatabase : RoomDatabase() {
 
     abstract val userDao : UserDao
 
-    abstract val userExceptionDao : UserExceptionDao
-
     companion object{
 
         @Volatile
@@ -45,7 +43,6 @@ abstract class UserDatabase : RoomDatabase() {
 
         }
 
-
     }
     class UserDatabaseCallback(private val scope: CoroutineScope) : RoomDatabase.Callback() {
 
@@ -55,13 +52,10 @@ abstract class UserDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
 
                 scope.launch {
-
                     val userDao = database.userDao
-
-                    userDao.insert(UserData(1, "1234", "Admim"))
+                    userDao.insert(UserData(1, "1234", "Admin"))
                     userDao.insert(UserData(2, "1235", "Employee"))
                     userDao.insert(UserData(3, "1236", "Employee"))
-
                 }
 
             }
