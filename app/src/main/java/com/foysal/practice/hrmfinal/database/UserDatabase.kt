@@ -5,7 +5,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Database( entities = [UserData::class, ExceptionData::class],
  version = 1, exportSchema = false)
@@ -34,7 +36,6 @@ abstract class UserDatabase : RoomDatabase() {
                         "user_database"
                     )
                         .addCallback(UserDatabaseCallback(scope))
-                        .fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance
                 }
@@ -50,12 +51,13 @@ abstract class UserDatabase : RoomDatabase() {
             super.onCreate(db)
 
             INSTANCE?.let { database ->
-
                 scope.launch {
-                    val userDao = database.userDao
-                    userDao.insert(UserData(1, "1234", "Admin"))
-                    userDao.insert(UserData(2, "1235", "Employee"))
-                    userDao.insert(UserData(3, "1236", "Employee"))
+                    withContext(Dispatchers.IO) {
+                        val userDao = database.userDao
+                        userDao.insert(UserData("1", "1234", "Admin"))
+                        userDao.insert(UserData("2", "1235", "Employee"))
+                        userDao.insert(UserData("3", "1236", "Employee"))
+                    }
                 }
 
             }

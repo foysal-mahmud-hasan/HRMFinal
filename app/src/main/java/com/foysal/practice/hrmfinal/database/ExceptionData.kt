@@ -23,6 +23,6 @@ data class ExceptionData (
     var userStatus : String,
 
     @ColumnInfo(name = "userExceptionId")
-    var userExceptionId : Int
+    var userExceptionId : String
 
 )

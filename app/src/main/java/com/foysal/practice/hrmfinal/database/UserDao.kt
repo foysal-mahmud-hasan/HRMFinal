@@ -1,10 +1,7 @@
 package com.foysal.practice.hrmfinal.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 
 @Dao
@@ -24,5 +21,11 @@ interface UserDao {
 
     @Query("SELECT * FROM user_table")
     fun getAllUserList() : List<UserData>
+
+    @Query("SELECT * from user_table where userId=(:userId) and userPassword=(:userPassword)")
+    suspend fun login(userId : String, userPassword : String) : UserData?
+
+    @Query("SELECT userRole FROM USER_TABLE WHERE userId=(:userId)")
+    suspend fun role(userId: String) : String
 
 }
