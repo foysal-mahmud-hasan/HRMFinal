@@ -1,32 +1,60 @@
 package com.foysal.practice.hrmfinal.home
 
-import android.view.View
-import androidx.databinding.BindingAdapter
-import androidx.databinding.ObservableField
+import android.app.Application
+import androidx.databinding.Bindable
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
 import com.foysal.practice.hrmfinal.database.UserDatabase
 import kotlinx.coroutines.*
 
 class HomeViewModel(private val userId: String, role : String,
-                    val database: UserDatabase) : ViewModel() {
+                    val database: UserDatabase, application: Application) : AndroidViewModel(application) {
 
 
-    init {
-        getUserRole()
-    }
+//    init {
+//        getUserRole()
+//    }
     private var viewModelJob = Job()
-    val scope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private val _navigateToExceptionEntry = MutableLiveData<Boolean>()
-    val navigateToExceptionEntry : LiveData<Boolean>
-        get() = _navigateToExceptionEntry
+    // Navigating
 
-    private val _navigateToAuthorize = MutableLiveData<Boolean>()
-    val navigateToAuthorize : LiveData<Boolean>
-        get() = _navigateToAuthorize
+//    private val _navigateToExceptionEntry = MutableLiveData<Boolean>()
+//    val navigateToExceptionEntry : LiveData<Boolean>
+//        get() = _navigateToExceptionEntry
+//
+//    private val _navigateToAuthorize = MutableLiveData<Boolean>()
+//    val navigateToAuthorize : LiveData<Boolean>
+//        get() = _navigateToAuthorize
+
+    private val _userIdAuth = MutableLiveData<String?>()
+    val userIdAuth : LiveData<String?>
+        get() = _userIdAuth
+    private val _userIdEntry = MutableLiveData<String?>()
+    val userIdEntry : LiveData<String?>
+        get() = _userIdEntry
+
+
+    fun navigateToAuth(){
+        _userIdAuth.value = userId
+    }
+
+    fun navigateToEntry(){
+        _userIdEntry.value = userId
+    }
+    // done navigating
+
+    fun doneNavigateToAuth(){
+        _userIdAuth.value = null
+    }
+
+    fun doneNavigateToEntry(){
+        _userIdEntry.value = null
+    }
+
+
+    // LATER
 
     private val _userRole = MutableLiveData<String>()
     val userRole : LiveData<String>
@@ -36,7 +64,7 @@ class HomeViewModel(private val userId: String, role : String,
     private val employee = MutableLiveData<Boolean>()
 
     private fun getUserRole(){
-        scope.launch {
+        uiScope.launch {
             _userRole.value = database.userDao.role(userId)
             if (_userRole.value == "admin"){
                 admin.value = true
@@ -48,18 +76,19 @@ class HomeViewModel(private val userId: String, role : String,
         }
     }
 
+
     fun exceptionEntry(){
 
 
 
     }
-    @BindingAdapter("android:visibility")
-    fun exceptionEntryVisible(view: View){
-        view.visibility = if (userRole.value=="admin") View.VISIBLE else View.INVISIBLE
-    }
-    @BindingAdapter("android:visibility")
-    fun authorizeVisible(view : View) {
-    }
+//    @BindingAdapter("android:visibility")
+//    fun exceptionEntryVisible(view: View){
+//        view.visibility = if (userRole.value=="admin") View.VISIBLE else View.INVISIBLE
+//    }
+//    @BindingAdapter("android:visibility")
+//    fun authorizeVisible(view : View) {
+//    }
 
 
 
@@ -73,7 +102,7 @@ class HomeViewModel(private val userId: String, role : String,
     }
     fun findRole(id : String){
 
-        scope.launch {
+        uiScope.launch {
             withContext(Dispatchers.IO){
 
                 _userRole.value = database.userDao.role(id)
@@ -82,6 +111,9 @@ class HomeViewModel(private val userId: String, role : String,
         }
 
     }
+
+
+
 
 
     override fun onCleared(){

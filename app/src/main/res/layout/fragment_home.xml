@@ -31,10 +31,11 @@
                 android:layout_marginTop="220sp"
                 android:background="@drawable/home_custom_button"
                 android:padding="10sp"
+
                 android:text="Exception Entry"
                 android:textAllCaps="false"
                 android:textColor="#280000"
-                app:visibility="@{() -> homeViewModel.exceptionEntryVisible()}"
+                android:onClick="@{() -> homeViewModel.navigateToEntry()}"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -43,6 +44,7 @@
                 android:minWidth="150sp"
                 android:minHeight="100sp"
                 android:textSize="20dp"
+                android:onClick="@{() -> homeViewModel.navigateToAuth()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/home_custom_button"

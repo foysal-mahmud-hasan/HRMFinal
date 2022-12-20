@@ -21,4 +21,5 @@
     <string name="hours_slept"><![CDATA[<b>Hours:Minutes:Seconds</b>]]></string>
     <string name="login">Login</string>
     <string name="white_services_technology">White Services Technology</string>
+    <string name="exception_reason">Exception</string> />
 </resources>

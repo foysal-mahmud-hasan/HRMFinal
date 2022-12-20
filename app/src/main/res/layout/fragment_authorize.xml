@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".authorize.AuthorizeFragment">
+    
+    <data>
+        <variable
+            name="authorizeViewModel"
+            type="com.foysal.practice.hrmfinal.authorize.AuthorizeViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
